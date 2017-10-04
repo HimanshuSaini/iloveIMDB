@@ -14,10 +14,10 @@ export default class Header extends Component {
     else {
       homeClass='selected-page';
     }
-    
+
     return (
       	<div className='header'>
-      		<img className='header-logo' src='../style/images/warning.png'></img>
+      		<img className='header-logo' src='../style/images/iloveimdb-logo-black.png'></img>
           <Link className={contactUsClass} to='/contactUs'>Contact Us</Link>
           <Link className={aboutUsClass} to='/aboutUs'>About Us</Link>
           <Link className={homeClass} to='/'>Home</Link>
