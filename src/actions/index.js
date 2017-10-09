@@ -2,7 +2,7 @@ import axios from 'axios';
 import sendMailService from '../services/contact-us-service';
 
 export const API_KEY = '82ce13f2'; 
-export const ROOT_URL = `http://www.omdbapi.com/?apikey=${API_KEY}`;
+export const ROOT_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
 export const FETCH_MOVIE = 'FETCH_MOVIE';
 export const SENDING_MAIL = 'SENDING_MAIL';
