@@ -14,17 +14,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "axios": "^0.16.2",
     "chai": "^3.5.0",
     "chai-jquery": "^2.0.0",
     "jquery": "^2.2.1",
     "jsdom": "^8.1.0",
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^0.14.7",
-    "redux-promise": "^0.5.3",
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
+    "axios": "^0.16.2",
+    "redux-promise": "^0.5.3",
     "babel-preset-stage-1": "^6.1.18",
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
