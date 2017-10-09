@@ -5,9 +5,11 @@
   "main": "index.js",
   "repository": "https://himanshusaini2212@bitbucket.org/himanshusaini2212/iloveimdb.git",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "postinstall": "webpack -p",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,12 +31,14 @@
   },
   "dependencies": {
     "babel-preset-stage-1": "^6.1.18",
+    "email-validator": "^1.1.1",
     "lodash": "^3.10.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "redux": "^3.0.4"
+    "redux": "^3.0.4",
+    "redux-form": "^7.1.0"
   }
 }

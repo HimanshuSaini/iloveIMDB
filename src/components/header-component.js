@@ -18,9 +18,9 @@ export default class Header extends Component {
     return (
       	<div className='header'>
       		<img className='header-logo' src='../style/images/iloveimdb-logo-black.png'></img>
-          <Link className={contactUsClass} to='/contactUs'>Contact Us</Link>
-          <Link className={aboutUsClass} to='/aboutUs'>About Us</Link>
-          <Link className={homeClass} to='/'>Home</Link>
+          <Link className={contactUsClass} to='/contactUs'>Say Hello!</Link>
+          <Link className={aboutUsClass} to='/aboutUs'>Our Story</Link>
+          <Link className={homeClass} to='/'>Your Movies</Link>
 	    </div>
     );
   }
