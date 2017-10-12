@@ -253,6 +253,7 @@ ul{
 .static-page-container {
     margin-top: 150px;
     font-family: 'Dosis', sans-serif;
+    margin-bottom: 20px;
 }
 
 .static-page-header {
