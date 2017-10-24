@@ -25,10 +25,15 @@ export function fetchMovie(movieName) {
 }
 
 export function sendMail(form) {
-	console.log(form)
-	sendMailService(form);
+	const url = 'https://iloveimdbserver.herokuapp.com/api/v1/contactUs';
 
-	return {
-		type: SENDING_MAIL
-	};
+	const request = axios.post(url, {
+		comments: form.comments,
+		email: form.email
+	}).then((response) => {
+		return {
+			type: MAIL_SENT,
+			payload: form
+		};
+	});
 }

@@ -5,6 +5,13 @@ import { sendMail } from '../actions/index';
 import emailValidator from 'email-validator';
 
 class ContactUs extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = { mailSent: false };
+  }
+
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? 'has-danger' : ''}`;
@@ -37,7 +44,10 @@ class ContactUs extends Component {
   }
 
   onSubmit(values) {
-    console.log(values);
+    sendMail(values);
+    this.props.reset();
+    this.setState({ mailSent: true });
+    setTimeout(() => { this.setState({ mailSent: false }); }, 5000);
   }
 
   render() {
@@ -67,6 +77,14 @@ class ContactUs extends Component {
             />
             <button type='submit' className='btn'>Send</button>
           </form>
+          {
+            this.state.mailSent ?
+              <div className='mail-confirmation'> 
+                <img className='confirm-green-tick' src='../style/images/ok-tick.png'></img>
+                Your feedback has been sent! 
+              </div> 
+              : null
+          }
         </div>
       </div>
     );
