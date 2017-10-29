@@ -7,6 +7,7 @@ export const ROOT_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 export const FETCH_MOVIE = 'FETCH_MOVIE';
 export const SENDING_MAIL = 'SENDING_MAIL';
 export const MAIL_SENT = 'MAIL_SENT';
+export const MOVIES_SAVED = 'MOVIES_SAVED';
 
 export function fetchMovie(movieName) {
 	const url = `${ROOT_URL}&t=${movieName}&y=&plot=short&r=jsonp`;
@@ -34,6 +35,19 @@ export function sendMail(form) {
 		return {
 			type: MAIL_SENT,
 			payload: form
+		};
+	});
+}
+
+export function storeMovies(moviesMap) {
+	const url = 'https://iloveimdbserver.herokuapp.com/api/v1/storeMovies';
+
+	const request = axios.post(url, {
+		moviesMap: moviesMap
+	}).then((response) => {
+		console.log('Map sent')
+		return {
+			type: MOVIES_SAVED
 		};
 	});
 }

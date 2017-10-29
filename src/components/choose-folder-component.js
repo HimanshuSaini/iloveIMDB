@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchMovie } from '../actions/index';
+import { fetchMovie, storeMovies } from '../actions/index';
 
 const VALID_MOVIE_EXT = ['webm', 'mkv', 'flv', 'vob', 'ogv', 'ogg', 'drc', 'mng', 'avi', 'mov', 'qt', 'wmv', 'yuv', 'rm', 'rmvb', 'asf', 'mp4', 'm4p', 'm4v', 'mpg', 'mp2', 'mpeg', 'mpe', 'mpv', 'm2v', 'svi', '3gp', '3g2', 'mxf', 'roq', 'nsv', 'flv', 'f4v', 'f4p', 'f4a', 'f4b'];
 const JUNK_WORDS = ['dvdrip', 'hdrip', 'DVDRiP'];
 
 class ChooseFolder extends Component {
+
 	constructor(props) {
 		super(props);
 
@@ -24,18 +25,21 @@ class ChooseFolder extends Component {
 	        files = event.target.files;
 	    }
 
-		let validMovieNames = this.findMovieNames(files);
+		let { movieNames, movieNamesMap } = this.findMovieNames(files);
 
 		let output = document.getElementById("listing");
-		for (let i=0; i<validMovieNames.length; i++) {
-			this.props.fetchMovie(validMovieNames[i]);
+		for (let i=0; i<movieNames.length; i++) {
+			this.props.fetchMovie(movieNames[i]);
 		};
+
+		this.props.storeMovies(movieNamesMap);
 	}
 
 	findMovieNames(filesList) {
 		let fileNames = _.map(filesList, (file) => file.name);
 
-		var movieNames = [];
+		let movieNamesMap = {};
+		let movieNames = [];
 		_.map(fileNames, (fileName) => {
 			let fileWordsWithExt = fileName.split('.');
 			let ext = fileWordsWithExt[fileWordsWithExt.length-1];
@@ -44,6 +48,7 @@ class ChooseFolder extends Component {
 				fileWordsWithExt.pop();
 				let fileWords = fileWordsWithExt.join(' ').split(' ');
 				let validWords = [];
+				let validMovie = '';
 
 				for (let i=0; i<fileWords.length; i++) {
 					fileWords[i] = fileWords[i].replace(/[\[()\]]+/g, '');
@@ -52,12 +57,19 @@ class ChooseFolder extends Component {
 					}
 					validWords.push(fileWords[i])
 				};
+				validMovie = validWords.join(' ');
 
-				movieNames.push(validWords.join(' '));
+				movieNames.push(validMovie);
+
+				//Another map to save movie names
+				movieNamesMap[fileWordsWithExt.join(' ')] = validMovie;
 			}
 		});
 
-		return movieNames;
+		return { 
+			movieNames : movieNames,
+			movieNamesMap : movieNamesMap
+		};
 	}
 
 	dragOver(event) {
@@ -83,9 +95,9 @@ class ChooseFolder extends Component {
 		return (
 			<div className='droppable-area' onDragOver={this.dragOver} onDragLeave={this.dragLeave} onDrop={this.dropDone}>
 				<div className='drag-drop-text'>
-					<div>Drag and Drop your movies here</div>
-					<div>or</div>
 					<div>Add your whole movies collection folder</div>
+					<div>by</div>
+					<div>clicking '+' icon below</div>
 				</div>
 				<div className='add-folder-area'>
 					<input type='file' className='file-btn' webkitdirectory='' onChange={this.onInputChange}/>
@@ -98,7 +110,7 @@ class ChooseFolder extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ fetchMovie }, dispatch);
+	return bindActionCreators({ fetchMovie, storeMovies }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(ChooseFolder);
